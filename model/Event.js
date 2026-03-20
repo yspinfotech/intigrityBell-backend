@@ -18,6 +18,10 @@ const eventSchema = mongoose.Schema({
         type: Date,
         required: true
     },
+    startTimeHour: Number,
+    startTimeMinute: Number,
+    endTimeHour: Number,
+    endTimeMinute: Number,
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',

@@ -24,13 +24,17 @@ const getEventById = async (req, res) => {
 // @route   POST /api/events
 // @access  Private/Admin
 const createEvent = async (req, res) => {
-    const { title, description, type, date } = req.body;
+    const { title, description, type, date, startTimeHour, startTimeMinute, endTimeHour, endTimeMinute } = req.body;
 
     const event = await Event.create({
         title,
         description,
         type,
         date,
+        startTimeHour,
+        startTimeMinute,
+        endTimeHour,
+        endTimeMinute,
         createdBy: req.user._id
     });
 
@@ -48,6 +52,10 @@ const updateEvent = async (req, res) => {
         event.description = req.body.description || event.description;
         event.type = req.body.type || event.type;
         event.date = req.body.date || event.date;
+        event.startTimeHour = req.body.startTimeHour !== undefined ? req.body.startTimeHour : event.startTimeHour;
+        event.startTimeMinute = req.body.startTimeMinute !== undefined ? req.body.startTimeMinute : event.startTimeMinute;
+        event.endTimeHour = req.body.endTimeHour !== undefined ? req.body.endTimeHour : event.endTimeHour;
+        event.endTimeMinute = req.body.endTimeMinute !== undefined ? req.body.endTimeMinute : event.endTimeMinute;
 
         const updatedEvent = await event.save();
         res.json(updatedEvent);
