@@ -4,10 +4,13 @@ const { getUsers, createUser, updateUser, deleteUser } = require('../controller/
 const { protect } = require('../middleware/auth');
 const { admin, manager } = require('../middleware/role');
 
+// GET all users (manager/admin can see users; team needs it too for profile/assignment display)
+// POST create user (admin only)
 router.route('/')
-    .get(protect, manager, getUsers)
+    .get(protect, getUsers)          // ✅ All authenticated users can fetch user list
     .post(protect, admin, createUser);
 
+// PUT update user | DELETE user (admin only)
 router.route('/:id')
     .put(protect, admin, updateUser)
     .delete(protect, admin, deleteUser);
