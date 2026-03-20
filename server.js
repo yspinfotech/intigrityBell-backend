@@ -31,6 +31,7 @@ const categoryRoutes = require("./routes/categoryRoutes");
 const taskRoutes = require("./routes/taskRoutes");
 const eventRoutes = require("./routes/eventRoutes");
 const statsRoutes = require("./routes/statsRoutes");
+const noteRoutes = require("./routes/noteRoutes");
 
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
@@ -38,6 +39,7 @@ app.use("/api/categories", categoryRoutes);
 app.use("/api/tasks", taskRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/stats", statsRoutes);
+app.use("/api/notes", noteRoutes);
 
 // Health check
 app.get("/", (req, res) => {
