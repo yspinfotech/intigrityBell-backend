@@ -11,8 +11,12 @@ const authUser = async (req, res) => {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
+    
+    if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+    }
 
-    if (user && (await user.matchPassword(password))) {
+    if (await user.matchPassword(password)) {
         res.json({
             _id: user._id,
             name: user.name,
@@ -21,7 +25,7 @@ const authUser = async (req, res) => {
             token: generateToken(user._id)
         });
     } else {
-        res.status(401).json({ message: 'Invalid email or password' });
+        res.status(401).json({ message: 'Invalid credentials' });
     }
 };
 
