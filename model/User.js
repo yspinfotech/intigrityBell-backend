@@ -19,6 +19,10 @@ const userSchema = mongoose.Schema({
         type: String,
         enum: ['admin', 'manager', 'team'],
         default: 'team'
+    },
+    fcmToken: {
+        type: String,
+        default: ''
     }
 }, {
     timestamps: true

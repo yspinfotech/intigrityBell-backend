@@ -56,15 +56,30 @@ const updateUser = async (req, res) => {
     }
 };
 
-const deleteUser = async (req, res) => {
-    const user = await User.findById(req.params.id);
+const updateProfile = async (req, res) => {
+    const user = await User.findById(req.user._id);
 
     if (user) {
-        await User.deleteOne({ _id: user._id });
-        res.json({ message: 'User removed' });
+        user.name = req.body.name || user.name;
+        user.email = req.body.email || user.email;
+        user.fcmToken = req.body.fcmToken || user.fcmToken;
+
+        if (req.body.password) {
+            user.password = req.body.password;
+        }
+
+        const updatedUser = await user.save();
+
+        res.json({
+            _id: updatedUser._id,
+            name: updatedUser.name,
+            email: updatedUser.email,
+            role: updatedUser.role,
+            fcmToken: updatedUser.fcmToken,
+        });
     } else {
         res.status(404).json({ message: 'User not found' });
     }
 };
 
-module.exports = { getUsers, createUser, updateUser, deleteUser };
+module.exports = { getUsers, createUser, updateUser, deleteUser, updateProfile };
